@@ -1,0 +1,3 @@
+#!bin/bash
+celery -A django_celery worker -l INFO
+celery -A django_celery beat --scheduler django_celery_beat.schedulers:DatabaseScheduler -l INFO
