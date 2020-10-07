@@ -6,40 +6,39 @@
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <title>{% block title %}Automatic Doser PH and Nutrients - Dashboard - GreenPonik.com{% endblock %}</title>
-    <link rel="shortcut icon" type="image/png" href="/media/favicon.ico" />
+    <title>{% block title %}Django + Celery + RabbitMQ test{% endblock %}</title>
+    <!-- <link rel="shortcut icon" type="image/png" href="/media/favicon.ico" /> -->
     {% block css %}{% endblock %}
 </head>
 
 <body id="device" class="bg-light" data-host="{{ request.get_host }}" data-hub="{{ data.device.hub }}"
-    data-current-path="{{ request.get_full_path }}"> 
+    data-current-path="{{ request.get_full_path }}">
     {% block body %}
-    <div id="messages-wrapper" class="position-absolute fade show" style="z-index: 1055;"> {% for message in messages %}
+    <div id="messages-wrapper" class="position-absolute fade show" style="z-index: 1055;">
+        {% for message in messages %}
         <div class="alert shadow alert-{{ message.tags }}"> {% if message.pk %} <a type="button" class="close"
                 close-href="{% url 'message_mark_read' message_id=message.pk %}" data-dismiss="alert"
                 aria-label="Close"> <span aria-hidden="true">&times;</span> </a> {% else %} <button type="button"
                 class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
             {% endif %} <h5 class="alert-heading">{{ message.tags|title }}</h5> <span class="">{{ message }}</span>
-        </div> {% endfor %} </div>
+        </div>
+        {% endfor %}
+    </div>
     <div class="container-fluid h-100">
         <div class="row no-gutters justify-content-center">
             <div class="col-12 col-lg-8">
-                {# <!--input id="root_path" type="hidden" value="{{ request.path_info() }}"--> #} <header
-                    class="row no-gutters justify-content-center">
+                <header class="row no-gutters justify-content-center">
                     <div class="col-12"> {% block header %} {% endblock %} </div>
                 </header>
                 <main class="row no-gutters justify-content-center h-100">
-                    <div class="col-12"> 
+                    <div class="col-12">
                         {% block main %} {% endblock %}
                     </div>
                 </main>
                 <footer class="row no-gutters">
-                    <div class="col-12"> {% block footer %} {% endblock %} <section class="row justify-content-center">
-                            <div class="col-12 col-md-6 col-xl-5 text-center py-4 text-muted"> made with <i
-                                    class="fas fa-heart text-danger"></i> for {% if user.is_authenticated %}
-                                {{ user.username }} {% else %} GreenRz {% endif %} <br> <a
-                                    href="https://www.greenponik.com" target="_blank"><small>©GreenPonik
-                                        2019</small></a> </div>
+                    <div class="col-12"> {% block footer %} {% endblock %}
+                        <section class="row justify-content-center">
+                            <div class="col-12 col-md-6 col-xl-5 text-center py-4 text-muted"> made by MkLHX</div>
                         </section>
                     </div>
                 </footer>
