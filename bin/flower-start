@@ -1,2 +1,2 @@
 #!bin/bash
-celery flower -A django_celery --broker=amqp://guest:guest@broker:5672 -l DEBUG
+celery flower -A django_celery --broker=amqp://guest:guest@broker:5672 -l INFO -f logs/celery.log

@@ -11,7 +11,7 @@ services:
   worker:
     build:
       context: .
-      dockerfile: Dockerfile.worker
+      dockerfile: docker/celery/Dockerfile.worker
     volumes:
       - .:/django_celery/
     command: sh bin/celery-start
@@ -33,7 +33,7 @@ services:
   django:
     build:
       context: .
-      dockerfile: Dockerfile.django
+      dockerfile: docker/django/Dockerfile
     volumes:
       - .:/django_celery/
     command: sh bin/django-start

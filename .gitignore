@@ -10,18 +10,10 @@ venv
 # ide folders
 .vscode
 # folders
-/static
-/migrations/
-logs/
-# ignore these files device side
-*.log
-ecdata.txt
-phdata.txt
-node_modules
+logs/**/.log
+!logs/**/.gitkeep
 
 ###> docker config###
-/database/data/**
-!/database/data/**/
-!/database/data/**/.gitkeep
+/docker/celery/data/**
+!/docker/celery/data/**/.gitkeep
 ###< docker config###
-/logs
