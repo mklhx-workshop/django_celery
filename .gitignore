@@ -17,4 +17,5 @@ logs/**/*.log
 ###> docker config###
 /docker/celery/data/**
 !/docker/celery/data/**/.gitkeep
+celerybeat.pid
 ###< docker config###
