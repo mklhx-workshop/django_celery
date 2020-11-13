@@ -10,8 +10,9 @@ venv
 # ide folders
 .vscode
 # folders
-logs/**/.log
+logs/**/
 !logs/**/.gitkeep
+logs/**/*.log
 
 ###> docker config###
 /docker/celery/data/**
