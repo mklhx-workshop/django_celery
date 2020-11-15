@@ -1,8 +1,0 @@
-FROM python:3.8-alpine
-
-WORKDIR /django_celery/
-
-COPY ./requirements.txt /django_celery/
-CMD pip install -r requirements.txt
-
-COPY . /django_celery/
