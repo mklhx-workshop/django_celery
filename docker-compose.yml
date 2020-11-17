@@ -24,11 +24,12 @@ services:
       - .:/django_celery/
     command: sh bin/flower-start
     environment:
-      - CELERY_BROKER_URL=amqp://broker:5672
+      - CELERY_BROKER_URL=amqp://guest:guest@broker:5672
+      # - CELERY_BROKER_URL=amqp://guest:guest@localhost:5672
       - FLOWER_PORT=5555
-      - FLOWER_URL_PREFIX=flower
+      # - FLOWER_URL_PREFIX=flower
     depends_on:
-      - worker
+      - broker
     expose:
       - "5555"
     ports:
@@ -40,13 +41,14 @@ services:
       dockerfile: docker/django/Dockerfile
     volumes:
       - .:/django_celery/
+      - ./static/:/django_celery/static/
+      - ./media/:/django_celery/media/
     command: sh bin/django-start
     depends_on:
-      - broker
       - worker
     expose:
       - "8000"
     ports:
       - 8000:8000
-volumes:
-  django_celery:
+# volumes:
+#   django_celery:

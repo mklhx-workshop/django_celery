@@ -3,5 +3,6 @@
 # while ! curl -sf http://broker:5672/ 2>&1 | grep '52'; do
 #     sleep 1
 # done
-celery -A django_celery worker -l INFO -f logs/celery.log
+celery -A django_celery worker -l INFO -f logs/celery.log --autoscale=3,1 --without-heartbeat --without-gossip --without-mingle --pool=solo --concurrency=1
+sleep 15
 celery -A django_celery beat --scheduler django_celery_beat.schedulers:DatabaseScheduler -l INFO -f logs/celery.log

@@ -10,6 +10,7 @@ venv
 # ide folders
 .vscode
 # folders
+/static
 logs/**/
 !logs/**/.gitkeep
 logs/**/*.log

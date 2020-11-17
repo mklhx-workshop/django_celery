@@ -13,8 +13,7 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -37,9 +36,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django_celery",
-    "django_celery_beat",
+    # "django_celery",
     "django_celery_results",
+    "django_celery_beat",
     "core",
 ]
 
@@ -122,9 +121,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_ROOT = "/static"
+STATIC_FOLDER = "static"
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, STATIC_FOLDER),
+# ]
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
-RABBITMQ_URL = "amqp://guest:guest@broker:5672/"
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+
+
+RABBITMQ_URL = "amqp://guest:guest@broker:5672"
+# RABBITMQ_URL = "amqp://guest:guest@localhost:5672"
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", RABBITMQ_URL)
 CELERY_RESULT_BACKEND = None
 
@@ -136,5 +144,9 @@ CELERY_BEAT_SCHEDULE = {
     "run_every_30_seconds": {
         "task": "core.tasks.every_30_sec",
         "schedule": 30.00,
-    }
+    },
+    "run_every_60_seconds": {
+        "task": "core.tasks.every_60_sec",
+        "schedule": 60.00,
+    },
 }
