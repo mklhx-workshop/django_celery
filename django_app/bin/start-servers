@@ -9,5 +9,5 @@ sleep 5
 bash $(pwd)/bin/celery-beat-start
 sleep 5
 bash $(pwd)/bin/django-start
-sleep 5
-bash $(pwd)/bin/celery-flower-start
+# sleep 5
+# bash $(pwd)/bin/celery-flower-start

@@ -7,7 +7,8 @@
 is_running=$(celery -A django_celery status | grep -c "OK")
 if [[ is_running -ne 1 ]]; then
     echo "starting celery worker..."
-    celery -A django_celery worker -E --detach --pidfile="" -l INFO -f logs/celery/celery-worker.log --without-heartbeat --without-gossip --without-mingle --pool=solo --concurrency=1 #--broker=redis://broker:6379
-else
+    celery -A django_celery worker -E --detach --pidfile="" -l INFO -f logs/celery/celery-worker.log --without-heartbeat --without-gossip --without-mingle --pool=solo --concurrency=1
     echo "celery worker started"
+else
+    echo "celery worker already started!"
 fi

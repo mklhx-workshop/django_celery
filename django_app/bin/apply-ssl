@@ -7,7 +7,9 @@
 #           -Raspberry Pi 3 A+
 # Licence: no licence private script copyright greenponik sas
 # Author: Mickael Lehoux <mickael.lehoux@greenponik.com>
+
 set -x
+
 function _apply_self_ssl_certificate() {
     command -v openssl >/dev/null 2>&1 || {
         echo >&2 "ERROR: Please install the openssl utility version 1.0.0 or newer to generate keys."
@@ -30,7 +32,6 @@ function _apply_self_ssl_certificate() {
 
     cmd="/usr/bin/openssl req -x509 -nodes -newkey rsa:2048 -keyout $(pwd)/ssl/server.key -out $(pwd)/ssl/server.crt -config $(pwd)/bin/openssl.conf -subj /CN=$_hostname -days 365"
     $cmd
-
-    exit 1
 }
+# TODO re launch this script every 363 days to avoid expires
 _apply_self_ssl_certificate
