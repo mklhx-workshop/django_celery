@@ -1,8 +1,8 @@
 #!bin/bash
-python -V
 python manage.py makemigrations
 python manage.py migrate
 python manage.py collectstatic --noinput
-python manage.py runserver 0.0.0.0:8000
+# python manage.py runserver 0.0.0.0:8000
 # if you want to use gunicorn you have to manage nginx container for static files
 # gunicorn django_celery.wsgi:application --bind 0.0.0.0:8000
+gunicorn --error-logfile logs/gunicorn/error.gunicorn.log --log-level error --workers 2 --timeout 90 --graceful-timeout 20 --keep-alive 5 --max-requests 1000 --bind 0.0.0.0:8000 django_celery.wsgi:application

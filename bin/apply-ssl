@@ -1,0 +1,36 @@
+#!/bin/bash
+# The script configures device for using greenponik
+# Distribution Raspbian Buster
+# works on:
+#           -Raspberry Pi Zero W
+#           -Raspberry Pi 3 B+
+#           -Raspberry Pi 3 A+
+# Licence: no licence private script copyright greenponik sas
+# Author: Mickael Lehoux <mickael.lehoux@greenponik.com>
+set -x
+function _apply_self_ssl_certificate() {
+    command -v openssl >/dev/null 2>&1 || {
+        echo >&2 "ERROR: Please install the openssl utility version 1.0.0 or newer to generate keys."
+        exit 1
+    }
+
+    if test -f $(pwd)/bin/openssl.conf; then echo >&2 "Let's go to apply ssl!! (ctrl+c to exit)"; else
+        echo >&2 "ERROR: openssl.conf is missing"
+        exit 1
+    fi
+
+    #ask for device hostname
+    read -t 15 -p "Enter device hostname to generate self-signed certificate on 'hostname.local' for exmaple: " _hostname
+
+    # if prompt is empty use current hostname
+    if [[ -z $_hostname ]]; then
+        echo "you give an empty hostname so we'll use the current hostname"
+        _hostname=$(hostname)
+    fi
+
+    cmd="/usr/bin/openssl req -x509 -nodes -newkey rsa:2048 -keyout $(pwd)/ssl/server.key -out $(pwd)/ssl/server.crt -config $(pwd)/bin/openssl.conf -subj /CN=$_hostname -days 365"
+    $cmd
+
+    exit 1
+}
+_apply_self_ssl_certificate

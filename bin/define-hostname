@@ -1,0 +1,41 @@
+#!/bin/bash
+# The script configures device for using greenponik
+# Distribution Raspbian Buster
+# works on:
+#           -Raspberry Pi Zero W
+#           -Raspberry Pi 3 B+
+#           -Raspberry Pi 3 A+
+# Licence: no licence private script copyright greenponik sas
+# Author: Mickael Lehoux <mickael.lehoux@greenponik.com>
+
+set -x
+
+function _define_hostname() {
+    ### manage hostname automatically by using
+    ### the last 3 characters of wlan0 mac address
+    # get wlan0 mac address
+    mac=$(cat /sys/class/net/wlan0/address)
+    # replace all :
+    _mac=${mac//:/}
+    # get last 3 characters of mac
+    last_three_mac=${_mac: -3}
+    # create device hostname
+    expected_hostname="hub-$last_three_mac"
+    # get current hostname
+    current_hostname=$(hostname)
+    # if current hostname is diffrent that the built hostname
+    # change it!
+    if [ "$current_hostname" != "$expected_hostname" ]; then
+        #echo "Change the current device hostname: $current_hostname by: $hostname"
+        sudo hostname "$expected_hostname"
+        sed -i "s/$current_hostname/$expected_hostname/g" /etc/hosts
+        sed -i "s/$current_hostname/$expected_hostname/g" /etc/hostname
+        #echo "Device will reboot in 5sec..."
+        sleep 5
+        reboot
+    else
+        echo "${current_hostname}"
+    fi
+}
+
+_define_hostname

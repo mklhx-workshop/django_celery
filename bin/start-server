@@ -1,5 +1,0 @@
-#!bin/bash
-
-# sh ./bin/celery-worker-start
-sh ./bin/django-start
-# sh ./bin/celery-beat-start

@@ -1,0 +1,23 @@
+#!/bin/bash
+# The script configures device for using greenponik
+# Distribution Raspbian Buster
+# works on:
+#           -Raspberry Pi Zero W
+#           -Raspberry Pi 3 B+
+#           -Raspberry Pi 3 A+
+# Licence: no licence private script copyright greenponik sas
+# Author: Mickael Lehoux <mickael.lehoux@greenponik.com>
+
+set -x
+
+# test if docker rabbitmq container celery-broker exist
+if [[ $(docker ps | grep -c celery-broker) ]]; then
+    docker stop celery-broker
+else
+    if [[ $(docker ps -a | grep -c celery-broker) ]]; then
+        echo "celery-broker not started"
+    else
+        echo "celery-broker doesn't exist"
+    fi
+    echo "\nuse command: bash bin/celery-broker-start\n"
+fi

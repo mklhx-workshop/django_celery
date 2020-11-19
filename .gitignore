@@ -11,9 +11,11 @@ venv
 .vscode
 # folders
 /static
-logs/**/
-!logs/**/.gitkeep
+# logs/**/
+logs/**/**/*.log
+!logs/**/**/.gitkeep
 logs/**/*.log
+!logs/**/.gitkeep
 
 ###> docker config###
 /docker/celery/data/**

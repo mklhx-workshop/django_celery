@@ -4,4 +4,10 @@
 # do
 #   sleep 1
 # done
-celery -A django_celery worker --detach --pidfile "" -l INFO -f logs/celery/celery-worker.log --without-heartbeat --without-gossip --without-mingle --concurrency=1
+is_running=$(celery -A django_celery status | grep -c "OK")
+if [[ is_running -ne 1 ]]; then
+    echo "starting worker..."
+    celery -A django_celery worker -E --detach --pidfile="" -l INFO -f logs/celery/celery-worker.log --without-heartbeat --without-gossip --without-mingle --pool=solo --concurrency=1
+else
+    echo "worker started"
+fi
