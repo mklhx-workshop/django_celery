@@ -2,53 +2,88 @@ version: "3.8"
 
 services:
   broker:
-    image: rabbitmq
-    expose:
-      - "5672"
-    ports:
-      - 5672:5672
-
-  worker:
-    build:
-      context: .
-      dockerfile: docker/celery/Dockerfile
+    image: redis:buster
     volumes:
-      - .:/django_celery/
-    command: sh bin/celery-start
-    depends_on:
-      - broker
-
-  flower:
-    image: mher/flower
-    volumes:
-      - .:/django_celery/
-    command: sh bin/flower-start
-    environment:
-      - CELERY_BROKER_URL=amqp://guest:guest@broker:5672
-      # - CELERY_BROKER_URL=amqp://guest:guest@localhost:5672
-      - FLOWER_PORT=5555
-      # - FLOWER_URL_PREFIX=flower
-    depends_on:
-      - broker
+      - ./logs/broker/:/var/log/redis/
+    restart: always
     expose:
-      - "5555"
+      - "6379"
     ports:
-      - 5555:5555
+      - 6379:6379
+    networks:
+      - net
+  # broker:
+  #   image: rabbitmq
+  #   restart: always
+    # expose:
+    #   - "5276"
+  #   ports:
+  #     - 5672:5672
+  #   # networks:
+  #   #   - net
 
   django:
     build:
       context: .
       dockerfile: docker/django/Dockerfile
+    working_dir: /django_celery/
     volumes:
       - .:/django_celery/
-      - ./static/:/django_celery/static/
-      - ./media/:/django_celery/media/
-    command: sh bin/django-start
+      - static_volume:/django_celery/static/
+      - media_volume:/django_celery/media/
+      # - ./logs/:/django_celery/logs/
+    # command: sh bin/start-server
     depends_on:
-      - worker
+      - broker
+    restart: always
     expose:
       - "8000"
     ports:
       - 8000:8000
-# volumes:
-#   django_celery:
+    networks:
+      - net
+
+  # flower:
+  #   image: mher/flower:0.9.4
+  #   working_dir: /django_celery/
+  #   # volumes:
+  #   #   - .:/django_celery/
+  #   command: sh bin/flower-start
+  #   environment:
+  #     - CELERY_BROKER_URL=redis://guest:guest@broker:6379
+  #     # - CELERY_BROKER_URL=amqp://guest:guest@broker:5672
+  #     # - CELERY_BROKER_URL=amqp://guest:guest@localhost:5672
+  #     - FLOWER_PORT=5555
+  #   depends_on:
+  #     - django
+  #   restart: always
+  #   # expose:
+  #   #   - "5555"
+  #   ports:
+  #     - 5555:5555
+  #   # networks:
+  #   # - net
+
+  nginx:
+    image: nginx:mainline-alpine
+    working_dir: /django_celery/
+    volumes:
+      - ./docker/nginx/vhost.conf:/etc/nginx/conf.d/django_celery.conf
+      - ./logs/nginx/:/var/log/nginx/
+      - static_volume:/django_celery/static/
+      - media_volume:/django_celery/media/
+    depends_on:
+      - django
+    restart: always
+    expose:
+      - "80"
+    ports:
+      - "80:80"
+    networks:
+      - net
+networks:
+  net:
+    driver: bridge
+volumes:
+  static_volume:
+  media_volume:

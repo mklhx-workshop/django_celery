@@ -1,6 +1,9 @@
 #!bin/bash
-python manage.py makemigrations
-python manage.py migrate
+# python manage.py makemigrations
+# python manage.py migrate
 # python manage.py collectstatic --noinput
 # python manage.py runserver 0.0.0.0:8000
-gunicorn django_celery.wsgi:application --bind 0.0.0.0:8000
+# if you use gunicorn you need to serve app with nginx and put static on nginx rules
+# gunicorn django_celery.wsgi:application --bind 0.0.0.0:8000
+gunicorn -D django_celery.wsgi:application --workers 2 --timeout 90 --graceful-timeout 20 --keep-alive 5 --max-requests 1000 --bind 0.0.0.0:8000
+# --bind unix:/tmp/django_celery.sock

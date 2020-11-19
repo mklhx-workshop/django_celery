@@ -1,0 +1,7 @@
+#!bin/bash
+
+# while [curl -sf http://broker:5672/ 2>&1 | grep '52' ]
+# do
+#   sleep 1
+# done
+celery -A django_celery worker --detach --pidfile "" -l INFO -f logs/celery/celery-worker.log --without-heartbeat --without-gossip --without-mingle --concurrency=1
