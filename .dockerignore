@@ -1,0 +1,7 @@
+.git
+.gitignore
+./docker-compose*.yml
+./*.md
+./bin
+./webapp/node_modules
+*__pycache__*
