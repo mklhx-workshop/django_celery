@@ -1,0 +1,3 @@
+#!bin/bash
+
+celery -A django_celery flower --detach -l DEBUG -f logs/celery/celery-flower.log --broker=redis://broker:6379

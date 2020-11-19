@@ -4,6 +4,6 @@
 # do 
 #     sleep 1
 # done
-echo "starting beat..."
+echo "starting celery beat..."
 celery -A django_celery beat --pidfile="" --detach -l INFO -f logs/celery/celery-beat.log --scheduler django_celery_beat.schedulers:DatabaseScheduler
-echo "beat started"
+echo "celery beat started"

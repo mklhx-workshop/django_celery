@@ -31,7 +31,7 @@ services:
     hostname: myhost
     working_dir: /django_celery/
     volumes:
-      - .:/django_celery/
+      - ./django_app/:/django_celery/
       - static_volume:/django_celery/static/
       - media_volume:/django_celery/media/
       - ./logs/:/django_celery/logs/
@@ -44,19 +44,19 @@ services:
     networks:
       - net
 
-  flower:
-    image: mher/flower:0.9.4
-    environment:
-      - CELERY_BROKER_URL=redis://broker:6379
-      - FLOWER_PORT=5555
-    depends_on:
-      - broker
-      - django
-    restart: always
-    ports:
-      - 5555:5555
-    networks:
-      - net
+  # flower:
+  #   image: mher/flower:0.9.4
+  #   environment:
+  #     - CELERY_BROKER_URL=redis://broker:6379
+  #     - FLOWER_PORT=5555
+  #   depends_on:
+  #     - broker
+  #     - django
+  #   restart: always
+  #   ports:
+  #     - 5555:5555
+  #   networks:
+  #     - net
 
   nginx:
     image: nginx:mainline-alpine
