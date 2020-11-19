@@ -1203,3 +1203,21 @@
 [2020-11-19 16:44:05,637: INFO/MainProcess] Scheduler: Sending due task run_every_30_seconds (core.tasks.every_30_sec)
 [2020-11-19 16:44:15,590: INFO/MainProcess] Scheduler: Sending due task run_every_10_seconds (core.tasks.every_10_sec)
 [2020-11-19 16:44:25,591: INFO/MainProcess] Scheduler: Sending due task run_every_10_seconds (core.tasks.every_10_sec)
+[2020-11-19 17:01:04,106: INFO/MainProcess] beat: Starting...
+[2020-11-19 17:01:04,107: INFO/MainProcess] Writing entries...
+[2020-11-19 17:01:04,410: INFO/MainProcess] DatabaseScheduler: Schedule changed.
+[2020-11-19 17:01:04,411: INFO/MainProcess] Writing entries...
+[2020-11-19 17:01:04,449: INFO/MainProcess] Scheduler: Sending due task run_every_10_seconds (core.tasks.every_10_sec)
+[2020-11-19 17:01:04,458: INFO/MainProcess] Writing entries...
+[2020-11-19 17:01:04,503: INFO/MainProcess] Scheduler: Sending due task run_every_30_seconds (core.tasks.every_30_sec)
+[2020-11-19 17:01:04,510: INFO/MainProcess] Scheduler: Sending due task run_every_60_seconds (core.tasks.every_60_sec)
+[2020-11-19 17:01:14,444: INFO/MainProcess] Scheduler: Sending due task run_every_10_seconds (core.tasks.every_10_sec)
+[2020-11-19 17:01:24,445: INFO/MainProcess] Scheduler: Sending due task run_every_10_seconds (core.tasks.every_10_sec)
+[2020-11-19 17:01:34,447: INFO/MainProcess] Scheduler: Sending due task run_every_10_seconds (core.tasks.every_10_sec)
+[2020-11-19 17:01:34,510: INFO/MainProcess] Scheduler: Sending due task run_every_30_seconds (core.tasks.every_30_sec)
+[2020-11-19 17:01:44,449: INFO/MainProcess] Scheduler: Sending due task run_every_10_seconds (core.tasks.every_10_sec)
+[2020-11-19 17:01:54,450: INFO/MainProcess] Scheduler: Sending due task run_every_10_seconds (core.tasks.every_10_sec)
+[2020-11-19 17:02:04,452: INFO/MainProcess] Scheduler: Sending due task run_every_10_seconds (core.tasks.every_10_sec)
+[2020-11-19 17:02:04,512: INFO/MainProcess] Scheduler: Sending due task run_every_30_seconds (core.tasks.every_30_sec)
+[2020-11-19 17:02:04,520: INFO/MainProcess] Scheduler: Sending due task run_every_60_seconds (core.tasks.every_60_sec)
+[2020-11-19 17:02:14,454: INFO/MainProcess] Scheduler: Sending due task run_every_10_seconds (core.tasks.every_10_sec)

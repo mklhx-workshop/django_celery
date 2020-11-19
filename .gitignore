@@ -1,22 +1,6 @@
-# Compiled source
-*.pyc
-**/__pycache__/
-# Text backup files
-*.bak
-# Database
-*.sqlite3
-# remove virtualenv
-venv
 # ide folders
 .vscode
-# folders
-/static
-# logs/**/
-logs/**/**/*.log
-!logs/**/**/.gitkeep
-logs/**/*.log
-!logs/**/.gitkeep
 
 ### docker config###
-*celerybeat.pid
-*celeryd.pid
+celerybeat.pid
+celeryd.pid

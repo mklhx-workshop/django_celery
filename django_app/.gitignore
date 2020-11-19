@@ -1,0 +1,24 @@
+# Compiled source
+*.pyc
+/__pycache__/
+# Text backup files
+*.bak
+# Database
+*.sqlite3
+# virtualenv
+venv
+
+# folders
+/static/**/
+!/static/**/.gitkeep
+/media/**/
+!/media/**/.gitkeep
+
+# logs/**/
+logs/**/**/*.log
+!logs/**/**/.gitkeep
+logs/**/*.log
+!logs/**/.gitkeep
+
+ssl/**/
+!ssl/**/.gitkeep
