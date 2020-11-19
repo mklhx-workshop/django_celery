@@ -9,9 +9,9 @@
 venv
 
 # folders
-static/**/
+static/**
 !static/**/.gitkeep
-media/**/
+media/**
 !media/**/.gitkeep
 
 
