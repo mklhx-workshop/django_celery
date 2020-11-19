@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.8-buster
 
 WORKDIR /django_celery/
 
@@ -6,16 +6,7 @@ WORKDIR /django_celery/
 # ENV PYTHONDONTWRITEBYTECODE 1
 # ENV PYTHONUNBUFFERED 1
 
-# RUN python -m pip install -U pip
-# RUN python -m pip install --upgrade pip
-COPY ./requirements.txt /django_celery/requirements.txt
-RUN pip install -r requirements.txt
-
 COPY . /django_celery/
 
-# RUN python manage.py makemigrations
-# RUN python manage.py migrate
-# RUN python manage.py collectstatic --noinput
-
-
-# EXPOSE 8000
+# COPY ./requirements.txt /django_celery/requirements.txt
+RUN pip install -r requirements.txt

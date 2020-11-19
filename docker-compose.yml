@@ -47,8 +47,8 @@ services:
       dockerfile: docker/django/Dockerfile
     volumes:
       - .:/django_celery/
-      - ./static/:/django_celery/static/
-      - ./media/:/django_celery/media/
+      # - ./static/:/django_celery/static/
+      # - ./media/:/django_celery/media/
     command: sh bin/django-start
     depends_on:
       - worker
@@ -58,6 +58,7 @@ services:
       - 8000:8000
     networks:
       - net
+
 volumes:
   django_celery:
 networks:
