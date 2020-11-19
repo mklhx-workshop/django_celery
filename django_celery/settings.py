@@ -121,19 +121,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_FOLDER = "static"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# static fildes dir for nginx container
 # STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, STATIC_FOLDER),
+#     "/django_celery/static/",
 # ]
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
-RABBITMQ_URL = "amqp://guest:guest@broker:5672"
-# RABBITMQ_URL = "amqp://guest:guest@localhost:5672"
-CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", RABBITMQ_URL)
+REDIS_URL = "redis://broker:6379"
+# RABBITMQ_URL = "amqp://guest:guest@broker:5672"
+BROKER_URL = REDIS_URL
+
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", BROKER_URL)
 CELERY_RESULT_BACKEND = None
 
 CELERY_BEAT_SCHEDULE = {
