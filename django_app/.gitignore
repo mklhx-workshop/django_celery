@@ -9,16 +9,18 @@
 venv
 
 # folders
-/static/**/
-!/static/**/.gitkeep
-/media/**/
-!/media/**/.gitkeep
+static/**/
+!static/**/.gitkeep
+media/**/
+!media/**/.gitkeep
 
-# logs/**/
-logs/**/**/*.log
-!logs/**/**/.gitkeep
+
+logs/*.log
 logs/**/*.log
+logs/**/**/*.log
+!logs/.gitkeep
 !logs/**/.gitkeep
+!logs/**/**/.gitkeep
 
-ssl/**/
-!ssl/**/.gitkeep
+ssl/**
+!ssl/.gitkeep
