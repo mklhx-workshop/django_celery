@@ -1,10 +1,27 @@
 version: "3.8"
 
 services:
+  manager:
+    image: portainer/portainer-ce:latest
+    # image: portainer/portainer-ce:alpine for raspberry version
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    expose:
+      - "9000"
+    ports:
+      - 9000:9000
+    networks:
+      - app_net
+
   broker:
-    image: redis:buster
+    # image: redis:buster
+    build:
+      context: .
+      dockerfile: docker/redis/Dockerfile
     hostname: broker
     volumes:
+      - ./docker/redis/redis.conf/:/usr/local/etc/redis/redis.conf
       - ./django_app/logs/broker/:/var/log/redis/
     restart: always
     expose:
@@ -13,23 +30,12 @@ services:
       - 6379:6379
     networks:
       - app_net
-  # broker:
-  #   image: rabbitmq
-  # volumes:
-  #   - ./logs/broker/:/var/log/redis/
-  #   restart: always
-  # expose:
-  #   - "5276"
-  #   ports:
-  #     - 5672:5672
-  #   # networks:
-  #   #   - app_net
 
   django:
     build:
       context: .
       dockerfile: docker/django/Dockerfile
-    # hostname: django
+    hostname: django
     working_dir: /django_celery/
     volumes:
       - ./django_app/:/django_celery/
@@ -37,6 +43,7 @@ services:
       - ./django_app/media/:/django_celery/media/
       - ./django_app/logs/:/django_celery/logs/
       - ./django_app/ssl/:/django_celery/ssl/
+      - ./host_bin/:/django_celery/host_bin/
     # command: sh bin/start-servers
     depends_on:
       - broker
@@ -48,18 +55,17 @@ services:
     # network_mode: host
     networks:
       - app_net
-    #   - host_net
+      # - host_net
 
   flower:
     image: mher/flower:0.9.4
-    # hostname: flower
+    hostname: flower
     environment:
       - CELERY_BROKER_URL=redis://broker:6379
       - FLOWER_PORT=5555
       - FLOWEE_PREFIX=/flower/
     depends_on:
       - broker
-      - django
     restart: always
     ports:
       - 5555:5555
@@ -68,7 +74,7 @@ services:
 
   nginx:
     image: nginx:mainline-alpine
-    # hostname: nginx
+    hostname: nginx
     working_dir: /django_celery/
     volumes:
       - ./docker/nginx/vhost.conf:/etc/nginx/conf.d/default.conf
@@ -76,8 +82,8 @@ services:
       - ./django_app/static/:/django_celery/static/
       - ./django_app/media/:/django_celery/media/
       - ./django_app/ssl/:/django_celery/ssl/
-    depends_on:
-      - django
+    # depends_on:
+    #   - django
     restart: always
     expose:
       - "80"
@@ -88,6 +94,6 @@ services:
 
 networks:
   app_net:
-    driver: bridge
+    # driver: bridge
   # host_net:
-    
+  #   driver: host

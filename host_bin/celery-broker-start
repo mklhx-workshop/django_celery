@@ -16,7 +16,10 @@ if [[ is_exist -eq 0  ]]; then
     # docker run -d -p 5672:5672 --name broker rabbitmq
     # docker run -d -p 6379:6379 --name broker redis:buster
     echo "broker is starting"
-    docker run -d -p 6379:6379 --name broker arm32v7/redis:buster --maxmemory 50Mb --tcp-backlog 128
+    # use docker run command only for tests
+    # docker run -d -p 6379:6379 --name broker arm32v7/redis:buster --maxmemory 50Mb --tcp-backlog 128
+    # TODO replace by docker-compose command
+    docker-compose -f docker-compose.yml -d up broker
 else
     docker start broker
 fi
