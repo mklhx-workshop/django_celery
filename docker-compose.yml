@@ -12,7 +12,7 @@ services:
     ports:
       - 6379:6379
     networks:
-      - net
+      - app_net
   # broker:
   #   image: rabbitmq
   # volumes:
@@ -23,13 +23,13 @@ services:
   #   ports:
   #     - 5672:5672
   #   # networks:
-  #   #   - net
+  #   #   - app_net
 
   django:
     build:
       context: .
       dockerfile: docker/django/Dockerfile
-    hostname: django
+    # hostname: django
     working_dir: /django_celery/
     volumes:
       - ./django_app/:/django_celery/
@@ -37,17 +37,22 @@ services:
       - ./django_app/media/:/django_celery/media/
       - ./django_app/logs/:/django_celery/logs/
       - ./django_app/ssl/:/django_celery/ssl/
+    # command: sh bin/start-servers
     depends_on:
       - broker
-    restart: on-failure
+    restart: always
+    expose:
+      - "8000"
     ports:
       - 8000:8000
+    # network_mode: host
     networks:
-      - net
+      - app_net
+    #   - host_net
 
   flower:
     image: mher/flower:0.9.4
-    hostname: flower
+    # hostname: flower
     environment:
       - CELERY_BROKER_URL=redis://broker:6379
       - FLOWER_PORT=5555
@@ -59,11 +64,11 @@ services:
     ports:
       - 5555:5555
     networks:
-      - net
+      - app_net
 
   nginx:
     image: nginx:mainline-alpine
-    hostname: nginx
+    # hostname: nginx
     working_dir: /django_celery/
     volumes:
       - ./docker/nginx/vhost.conf:/etc/nginx/conf.d/default.conf
@@ -79,8 +84,10 @@ services:
     ports:
       - "80:80"
     networks:
-      - net
+      - app_net
 
 networks:
-  net:
+  app_net:
     driver: bridge
+  # host_net:
+    

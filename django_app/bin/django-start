@@ -1,9 +1,22 @@
-#!bin/bash
+#!/bin/bash
+# The script configures device for using greenponik
+# Distribution Raspbian Buster
+# works on:
+#           -Raspberry Pi Zero W
+#           -Raspberry Pi 3 B+
+#           -Raspberry Pi 3 A+
+# Licence: no licence private script copyright greenponik sas
+# Author: Mickael Lehoux <mickael.lehoux@greenponik.com>
+
+set -x
+
 python manage.py makemigrations
 python manage.py migrate
 python manage.py collectstatic --noinput
 # python manage.py runserver 0.0.0.0:8000
 # if you want to use gunicorn you have to manage nginx container for static files
 # gunicorn django_celery.wsgi:application --bind 0.0.0.0:8000
-echo "starting gunicorn"
-gunicorn -D --error-logfile logs/gunicorn/error.gunicorn.log --log-level error --workers 2 --timeout 90 --graceful-timeout 20 --keep-alive 5 --max-requests 1000 --bind 0.0.0.0:8000 django_celery.wsgi:application
+echo "starting gunicorn..."
+python manage.py runserver 0.0.0.0:8000
+# gunicorn django_celery.wsgi:application --bind 0.0.0.0:8000 --workers 2 --timeout 90 --graceful-timeout 20 --keep-alive 5 --max-requests 1000 --log-level error --error-logfile logs/gunicorn/error.gunicorn.log
+echo "gunicorn started"

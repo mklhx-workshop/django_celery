@@ -11,9 +11,13 @@ venv
 # folders
 static/**
 !static/**/.gitkeep
+
 media/**
 !media/**/.gitkeep
 
+!media/gpk/
+media/user-content/**
+!media/user-content/
 
 logs/*.log
 logs/**/*.log

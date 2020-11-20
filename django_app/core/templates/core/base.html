@@ -6,8 +6,11 @@
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
     <meta content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <title>{% block title %}Django + Celery + RabbitMQ test{% endblock %}</title>
-    <!-- <link rel="shortcut icon" type="image/png" href="/media/favicon.ico" /> -->
+    <title>{% block title %}Django + Celery + redis/RabbitMQ test{% endblock %}</title>
+    {% load static %}
+    {% get_static_prefix as STATIC %}
+    {% get_media_prefix as MEDIA %}
+    <link rel="shortcut icon" type="image/png" href="{{ MEDIA }}gpk/favicon.ico" />
     {% block css %}{% endblock %}
 </head>
 

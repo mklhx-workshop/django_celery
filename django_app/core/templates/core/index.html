@@ -3,6 +3,9 @@
 <section>
 
     index view from core app
+    {% load static %}
+    {% get_media_prefix as MEDIA %}
+    <img src="{{ MEDIA }}gpk/logo.png" alt="greeponik logo">
 
 </section>
 {% endblock %}
