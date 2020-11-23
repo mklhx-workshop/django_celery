@@ -27,7 +27,7 @@ function _define_hostname() {
     # change it!
     if [ "$current_hostname" != "$expected_hostname" ]; then
         #echo "Change the current device hostname: $current_hostname by: $hostname"
-        sudo hostname "$expected_hostname"
+        hostname "$expected_hostname"
         sed -i "s/$current_hostname/$expected_hostname/g" /etc/hosts
         sed -i "s/$current_hostname/$expected_hostname/g" /etc/hostname
         #echo "Device will reboot in 5sec..."
