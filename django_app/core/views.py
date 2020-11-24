@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from settings import APP_TITLE
 
 # Create your views here.
 
@@ -6,8 +7,7 @@ from django.shortcuts import render
 def index(request):
 
     return render(
-                request,
-                "core/index.html",
-                {
-                },
-            )
+        request,
+        "core/index.html",
+        {"APP_TITLE": APP_TITLE},
+    )
