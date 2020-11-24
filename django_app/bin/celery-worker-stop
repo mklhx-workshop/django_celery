@@ -13,4 +13,3 @@ set -x
 # keep order of these commands
 bash $(pwd)/bin/celery-worker-purge
 celery -A django_celery control shutdown
-# pkill -f celery

@@ -10,10 +10,9 @@
 
 set -x
 
-# while [ 1 -ne $(celery -A django_celery status | grep -cF "OK") ]
-# do 
-#     sleep 1
-# done
+while [ ! $(ping -c 1 broker | grep -cF "1 received") ]
+do
+    sleep 1
+done
 echo "starting celery beat..."
-celery -A django_celery beat --pidfile="" --detach -l INFO -f logs/celery/celery-beat.log --scheduler django_celery_beat.schedulers:DatabaseScheduler
-echo "celery beat started"
+celery -A django_celery beat --pidfile="" -l DEBUG -f logs/celery/celery-beat.log --scheduler django_celery_beat.schedulers:DatabaseScheduler

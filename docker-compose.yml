@@ -23,6 +23,7 @@ services:
     volumes:
       - ./docker/redis/redis.conf/:/usr/local/etc/redis/redis.conf
       - ./django_app/logs/broker/:/var/log/redis/
+    command: redis-server /usr/local/etc/redis/redis.conf
     restart: always
     expose:
       - "6379"
@@ -43,8 +44,7 @@ services:
       - ./django_app/media/:/django_celery/media/
       - ./django_app/logs/:/django_celery/logs/
       - ./django_app/ssl/:/django_celery/ssl/
-      - ./host_bin/:/django_celery/host_bin/
-    # command: sh bin/start-servers
+    command: sh bin/django-start
     depends_on:
       - broker
     restart: always
@@ -56,6 +56,38 @@ services:
     networks:
       - app_net
       # - host_net
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/worker/Dockerfile
+    hostname: worker
+    working_dir: /django_celery/
+    volumes_from:
+      - django
+    command: sh bin/celery-worker-start
+    depends_on:
+      - broker
+      - django
+    restart: always
+    networks:
+      - app_net
+
+  beat:
+    build:
+      context: .
+      dockerfile: docker/beat/Dockerfile
+    hostname: beat
+    working_dir: /django_celery/
+    volumes_from:
+      - django
+    command: sh bin/celery-beat-start
+    depends_on:
+      - broker
+      - django
+    restart: always
+    networks:
+      - app_net
 
   flower:
     image: mher/flower:0.9.4
@@ -82,8 +114,8 @@ services:
       - ./django_app/static/:/django_celery/static/
       - ./django_app/media/:/django_celery/media/
       - ./django_app/ssl/:/django_celery/ssl/
-    # depends_on:
-    #   - django
+    depends_on:
+      - django
     restart: always
     expose:
       - "80"
@@ -94,6 +126,3 @@ services:
 
 networks:
   app_net:
-    # driver: bridge
-  # host_net:
-  #   driver: host

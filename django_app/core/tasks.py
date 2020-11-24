@@ -4,7 +4,6 @@ import random
 
 logger = get_task_logger(__name__)
 
-
 @app.shared_task
 def every_10_sec():
     logger.info("Run every 10sec methods")

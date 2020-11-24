@@ -4,3 +4,4 @@
 ### docker config###
 celerybeat.pid
 celeryd.pid
+celerybeat-schedule
