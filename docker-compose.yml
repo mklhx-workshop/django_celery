@@ -36,6 +36,12 @@ services:
     build:
       context: .
       dockerfile: docker/django/Dockerfile
+      args:
+        - APP_TITLE=${APP_TITLE}
+        - DEBUG=${DEBUG}
+        - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
+        - DJANGO_PORT=${DJANGO_PORT}
+        - SECRET_KEY=${SECRET_KEY}
     hostname: django
     working_dir: /django_celery/
     volumes:
@@ -45,17 +51,14 @@ services:
       - ./django_app/logs/:/django_celery/logs/
       - ./django_app/ssl/:/django_celery/ssl/
     command: sh bin/django-start
-    depends_on:
-      - broker
+    env_file: .env
     restart: always
     expose:
       - "8000"
     ports:
       - 8000:8000
-    # network_mode: host
     networks:
       - app_net
-      # - host_net
 
   worker:
     build:

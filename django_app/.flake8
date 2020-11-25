@@ -1,0 +1,4 @@
+[flake8]
+exclude = .tox,*.egg,build,data,docs,bin,logs,media,static,ssl,venv,webapp,.gitignore,requirements.txt,.pytest_cache
+select = E,W,F
+ignore = W503, E402, F401, E501

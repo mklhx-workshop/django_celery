@@ -2,26 +2,26 @@ FROM python:3.8-buster
 
 WORKDIR /django_celery/
 
+ARG APP_TITLE
+ARG DEBUG
+ARG DJANGO_ALLOWED_HOSTS
+ARG DJANGO_PORT
+ARG SECRET_KEY
+
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-RUN apt-get update && apt-get install -y \
-    avahi-daemon \
-    samba
-
-RUN python -m pip install --upgrade pip
+RUN python -m pip -q install --upgrade pip
 
 COPY ./django_app/ /django_celery/
 
-RUN pip install -r requirements.txt
+RUN pip -q install -r requirements.txt
 
 RUN python manage.py makemigrations
 RUN python manage.py migrate
 RUN python manage.py collectstatic --noinput
 
-# RUN bash bin/apply-ssl
-
-EXPOSE 8000
+EXPOSE $DJANGO_PORT
 
 CMD ["bash", "bin/django-start"]

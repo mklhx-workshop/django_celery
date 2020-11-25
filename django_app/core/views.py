@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from settings import APP_TITLE
+from django_celery.settings import APP_TITLE
 
 # Create your views here.
 

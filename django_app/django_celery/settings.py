@@ -24,15 +24,16 @@ load_dotenv(dotenv_path=env_path)
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "$#fmgj*fy2z1*pn87bk28ro1=mf2!rzw=uf(@q1qyb3eyse^n&"
+# SECRET_KEY = "$#fmgj*fy2z1*pn87bk28ro1=mf2!rzw=uf(@q1qyb3eyse^n&"
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG")
 
-APP_TITLE = os.getenv("APP_TITLE")
+APP_TITLE = os.environ.get("APP_TITLE")
 
 # ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 # Application definition
 
@@ -43,15 +44,16 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "django_celery",
     "django_celery_results",
     "django_celery_beat",
+    "corsheaders",
     "core",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -162,3 +164,7 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": 60.00,
     },
 }
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8080',
+)
